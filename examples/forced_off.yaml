@@ -1,0 +1,12 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: no
+  tasks:
+  - name: Trigger node reboot
+    rsd_power:
+      id:
+        value: 1
+        type: identity
+      state: off
+      force: true

@@ -1,0 +1,12 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: no
+  tasks:
+  - name: Override Boot options to boot once from PXE boot in UEFI mode.
+    rsd_boot:
+      id:
+        value: 1
+      boot_target: pxe
+      boot_enable: once
+      boot_mode: uefi

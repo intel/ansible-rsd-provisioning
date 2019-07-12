@@ -1,0 +1,127 @@
+# Copyright (c) 2019 Intel Corporation. All rights reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#    http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+---
+- name: Compose Node
+  rsd_compose:
+    spec:
+      name: "{{ item }}"
+      description: "{{ rsd_node_description }}"
+      processors: "{{ rsd_node_processors }}"
+      local_drives: "{{ rsd_node_local_drives }}"
+      remote_drives: "{{ rsd_node_remote_drives }}"
+      eth_ifaces: "{{ rsd_node_eth_interfaces }}"
+      memory: "{{ rsd_node_memory_spec }}"
+      total_mem: "{{ rsd_node_memory }}"
+      total_cores: "{{ rsd_node_cores }}"
+    state: "{{ rsd_node_state }}"
+    podm:
+      validate_cert: "{{ podm_validate_cert }}"
+  register: output
+
+- name: Overwrite boot options three arguments
+  rsd_boot:
+    id:
+      value: "{{ output.node.Id }}"
+    boot_target: "{{ rsd_boot_option.boot_target }}"
+    boot_enable: "{{ rsd_boot_option.boot_enable }}"
+    boot_mode: "{{ rsd_boot_option.boot_mode }}"
+    podm:
+      validate_cert: "{{ podm_validate_cert }}"
+  when: |
+    rsd_boot_option.boot_mode is defined and
+    rsd_boot_option.boot_target is defined and
+    rsd_boot_option.boot_enable is defined and
+    rsd_boot_option.boot_mode is not none and
+    rsd_boot_option.boot_target is not none and
+    rsd_boot_option.boot_target is not none
+
+- name: Overwrite boot options two arguments
+  rsd_boot:
+    id:
+      value: "{{ output.node.Id }}"
+    boot_target: "{{ rsd_boot_option.boot_target }}"
+    boot_enable: "{{ rsd_boot_option.boot_enable }}"
+    podm:
+      validate_cert: "{{ podm_validate_cert }}"
+  when: |
+    rsd_boot_option.boot_enable is defined and
+    rsd_boot_option.boot_target is defined and
+    rsd_boot_option.boot_enable is not none and
+    rsd_boot_option.boot_target is not none and
+    (rsd_boot_option.boot_mode is not defined or rsd_boot_option.boot_mode is none)
+
+- name: Restart Node
+  rsd_power:
+    id:
+      value: "{{ output.node.Id }}"
+    state: restarted
+    podm:
+      validate_cert: "{{ podm_validate_cert }}"
+
+- name: Collect node details
+  set_fact:
+    rsd_node_info: "{{ rsd_node_info | default([]) | combine({ output.node.Name: output.node })}}"
+
+- name: Create output files
+  block:
+
+    - name: Generate name for node information file
+      set_fact:
+        rsd_node_info_filename: "{{ rsd_output_path }}/{{ rsd_inventory_group }}-{{ date_time.date}}-{{ date_time.time }}.json"
+
+    - name: Create node information file
+      file:
+        path: "{{ rsd_node_info_filename }}"
+        state: touch
+        mode: 0600
+
+    - name: Append node details to file
+      copy:
+        content: "{{ rsd_node_info | to_nice_json }}"
+        dest: "{{ rsd_node_info_filename }}"
+
+    - name: Create inventory file
+      file:
+        path: "{{ rsd_output_path }}/inventory"
+        state: touch
+        mode: 0600
+
+    - name: Create inventory key for "{{ rsd_inventory_group }}" group
+      lineinfile:
+        dest: "{{ rsd_output_path }}/inventory"
+        line: "[{{ rsd_inventory_group }}]"
+        state: present
+
+    - name: Append node IPv4 to inventory under "[{{ rsd_inventory_group }}]" group
+      lineinfile:
+        dest: "{{ rsd_output_path }}/inventory"
+        line: "{{ output.node.Details.Interfaces[0].IPv4Addresses[0] }}"
+        state: present
+        insertafter: "[{{ rsd_inventory_group }}]"
+
+    - name: Create inventory key for "[all]" group
+      lineinfile:
+        dest: "{{ rsd_output_path }}/inventory"
+        line: "[all]"
+        state: present
+        insertafter: EOF
+
+    - name: Append node IPv4 to inventory under "[all]" group
+      lineinfile:
+        dest: "{{ rsd_output_path }}/inventory"
+        line: "{{ output.node.Details.Interfaces[0].IPv4Addresses[0] }}"
+        state: present
+        insertafter: "[all]"
+  when: rsd_write_to_files

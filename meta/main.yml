@@ -1,0 +1,37 @@
+galaxy_info:
+  role_name: rsd-provisioning
+  author: Marco Chiappero, Radoslaw Kuschel
+  description: Provision multiple nodes at once from Intel Rack Scale Design
+               composable hardware
+  company: Intel Corporation
+  license: "(Apache v2.0, GPLv3+)"
+  min_ansible_version: 2.6.2
+
+  platforms:
+    - name: Debian
+      versions:
+        - all
+    - name: Ubuntu
+      versions:
+        - all
+    - name: EL
+      versions:
+        - all
+    - name: Fedora
+      versions:
+        - all
+    - name: opensuse
+      versions:
+        - all
+
+  galaxy_tags:
+    - Rack Scale Design
+    - RSD
+    - system
+    - orchestration
+    - system
+    - composability
+    - composable-infrastructure
+    - provisioning
+
+dependencies: []

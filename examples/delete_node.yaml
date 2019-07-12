@@ -1,0 +1,10 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: no
+  tasks:
+    - name: Remove the composed node identified by id
+      rsd_compose:
+        id:
+          value: 27
+        state: absent

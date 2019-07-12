@@ -1,0 +1,12 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: no
+  tasks:
+    - name: Allocate a node from the specified info/requirements
+      rsd_compose:
+        spec:
+          name: Test node
+          description: Node for testing allocate_spec.yaml
+          total_cores: 8
+        state: allocated

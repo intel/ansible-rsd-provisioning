@@ -1,0 +1,10 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: no
+  tasks:
+    - name: Assemble an already allocated node
+      rsd_compose:
+        id:
+          value: 25
+        state: assembled

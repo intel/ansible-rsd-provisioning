@@ -1,0 +1,9 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: no
+  tasks:
+    - name: Allocate a node from a PODM compliant JSON info/requirements file
+      rsd_compose:
+        specfile: specfile.json
+        state: allocated

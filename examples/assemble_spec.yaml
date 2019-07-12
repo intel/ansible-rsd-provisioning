@@ -1,0 +1,12 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: no
+  tasks:
+    - name: Assemble a node from the specified info/requirements
+      rsd_compose:
+        spec:
+          name: Test node
+          description: Node for testing assemble assemble_spec.yaml
+          total_mem: 8000
+        state: assembled

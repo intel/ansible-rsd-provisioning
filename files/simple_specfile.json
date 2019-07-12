@@ -1,0 +1,6 @@
+{
+    "Name": "Test node",
+    "Description": "Node for testing allocate_specfile.yaml",
+    "TotalSystemMemoryMiB": 8000,
+    "TotalSystemCoreCount": 8
+}
