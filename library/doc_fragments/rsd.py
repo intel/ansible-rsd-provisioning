@@ -75,7 +75,7 @@ options:
                     - pass
 
 requirements:
-  - rsd-lib > 0.2.2
+  - rsd-lib > 1.0.0
   - RSD PODM API >= 2.1
 
 seealso:

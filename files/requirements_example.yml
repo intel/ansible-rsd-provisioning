@@ -40,52 +40,54 @@ number_of_nodes_to_provision: 5
 # key-value specified requirements).
 # To avoid providing one requirement, simply comment out the related variable.
 
-# Name assigned to the composed node
+# Name assigned to the composed node.
 rsd_node_name: compute
 
-# A short text description associated to node e.g. "OpenStack Compute Node"
+# A short text description associated to node e.g. "OpenStack Compute Node".
 rsd_node_description: "OpenStack Compute Node"
 
 # The composed node will have at lest the amount CPU cores here specified,
-# potentially accross multiple CPUs 
+# potentially accross multiple CPUs.
 rsd_node_cores: 30
 
-# Minimum amount of memory for the whole system, in MiB unit
+# Minimum amount of memory for the whole system, in MiB unit.
 rsd_node_memory: 40000
 
-# FPGA over fabric request and attachment, plus specific specs for a single CPU
+# FPGA over fabric request and attachment, plus specific specs for a single
+# CPU.
 rsd_node_processors:
   - { ProcessorType: FPGA, Connectivity: RemotePCIe }
   - { ProcessorType: CPU, AchievableSpeedMHz: 3000, TotalCores: 20 }
 
-# Memory requirements, for requesting specific memory technologies, speeds, etc.
+# Memory requirements, for requesting specific memory technologies, speeds,
+# etc.
 rsd_node_memory_spec:
   - { CapacityMiB: 20000, MemoryDeviceType: DDR4, SpeedMHz: 2400 }
 
 # List of local drives to assigned to the node and their specifications, such
-# as capacity, type and interface
+# as capacity, type and interface.
 rsd_node_local_drives:
   - { CapacityGiB: 100, Type: SSD, Interface: NVMe }
 
 # List of remote drives to be attached to the node with their size and other
-# desired characteristics
+# desired characteristics.
 rsd_node_remote_drives:
   - { CapacityGiB: 80, Protocol: NVMeOverFabrics }
   - { CapacityGiB: 20, Protocol: NVMeOverFabrics }
 
 # List of interfaces and their desired specifications, such as their desired
-# link speed
+# link speed.
 rsd_node_eth_interfaces:
   - { SpeedMbps: 10000 }
 
 # In case it's preferred to have control over the proposed node specification
 # before actually instantiating the node, just use 'allocated' for review and
-# subsequent deletion ('absent') or assembly ('assembled')
+# subsequent deletion ('absent') or assembly ('assembled').
 rsd_node_state: assembled
 
 # This function set node booting options. Boot_target and boot_enable are
-# mandatory arguments to perform overwrite boot option action,
-# boot_mode is optional.
+# mandatory arguments to perform overwrite boot option action, boot_mode
+# is optional.
 rsd_boot_option:
    boot_target: hdd
    boot_enable: once

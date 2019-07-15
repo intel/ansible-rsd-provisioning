@@ -195,7 +195,7 @@ class RsdNodePower(RSD):
 
         if requested_state not in compute_reset_values:
             self.module.fail_json(
-                msg="This node do not support such power action: "
+                msg="This node does not support such power action: "
                     "'{0}'. The node supports following power actions: "
                     "{1}".format(requested_state, compute_reset_values))
 
@@ -216,7 +216,7 @@ class RsdNodePower(RSD):
                 return self._return_power_result(node, False, power_state)
             else:
                 self.module.fail_json(msg="Reset action failed. The required "
-                                      "transition might not be suported")
+                                      "transition might not be supported")
 
     def _return_power_result(self, node, changed, requested_state):
         result = dict()

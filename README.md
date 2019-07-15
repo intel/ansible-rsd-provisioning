@@ -15,6 +15,8 @@ Once the role is installed and executed at least once, the above two modules can
 
 Composition requirements of the nodes for this role are controlled through a number of predefined variables detailed below. Interaction with PODM requires endpoint and authentication values, also detailed below.
 
+Please note that this role isn't idempotent.
+
 This role supports Intel® RSD 2.3.x and 2.4.0 versions.
 
 
@@ -78,14 +80,21 @@ None
 Example Playbook
 ----------------
 
-to learn more about modules and how they could be used please see the documentation and examples included with the modules. See `library/rsd_compose.py` to learn more about `rsd_compose` module and `library/rsd_power.py` to learn more about `rsd_power` module.
+to learn more about modules and how they could be used please see the documentation and examples included with the modules. See `library/rsd_compose.py` to learn more about `rsd_compose` module and `library/rsd_power.py` to learn more about `rsd_power` module. Before running playbook make sure to export PODM authentication variables.
+
+Example export of PODM authentication variables:
+
+    export PODM_HOST=127.0.0.1
+    export PODM_PORT=8443
+    export PODM_USERNAME=admin
+    export PODM_PASSWORD=password
 
 Example playbook using this role:
 
     - hosts: localhost
       connection: local
       roles:
-        - radoslawKuschel.rsd-provisioning
+        - intel.rsd-provisioning
 
 Example playbook for the rsd_compose module specifying requirements inline:
 
