@@ -122,7 +122,7 @@ class RSD(object):
                 port=dict(
                     type='int',
                     fallback=(env_fallback, ['PODM_PORT']),
-                    default=8443,
+                    default=443,
                 ),
                 protocol=dict(
                     type='str',
