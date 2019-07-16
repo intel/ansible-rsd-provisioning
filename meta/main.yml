@@ -25,13 +25,12 @@ galaxy_info:
         - all
 
   galaxy_tags:
-    - rack scale design
+    - rackscale
     - rsd
     - system
     - orchestration
     - system
     - composability
-    - composable infrastructure
     - provisioning
 
 dependencies: []
