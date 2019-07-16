@@ -94,7 +94,7 @@ Example playbook using this role:
     - hosts: localhost
       connection: local
       roles:
-        - intel.rsd-provisioning
+        - intel.ansible_rsd_provisioning
 
 Example playbook for the rsd_compose module specifying requirements inline:
 

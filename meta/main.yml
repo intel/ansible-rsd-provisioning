@@ -1,5 +1,4 @@
 galaxy_info:
-  role_name: rsd-provisioning
   author: Marco Chiappero, Radoslaw Kuschel
   description: Provision multiple nodes at once from Intel Rack Scale Design
                composable hardware
