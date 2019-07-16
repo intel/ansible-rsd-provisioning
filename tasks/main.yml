@@ -13,7 +13,8 @@
 # limitations under the License.
 
 ---
-- set_fact:
+- name: Store current timestamp
+  set_fact:
     date_time: "{{ ansible_date_time }}"
   when: rsd_write_to_files
 

@@ -72,14 +72,14 @@
 
 - name: Collect node details
   set_fact:
-    rsd_node_info: "{{ rsd_node_info | default([]) | combine({ output.node.Name: output.node })}}"
+    rsd_node_info: "{{ rsd_node_info | default([]) | combine({ output.node.Name: output.node }) }}"
 
 - name: Create output files
   block:
 
     - name: Generate name for node information file
       set_fact:
-        rsd_node_info_filename: "{{ rsd_output_path }}/{{ rsd_inventory_group }}-{{ date_time.date}}-{{ date_time.time }}.json"
+        rsd_node_info_filename: "{{ rsd_output_path }}/{{ rsd_inventory_group }}-{{ date_time.date }}-{{ date_time.time }}.json"
 
     - name: Create node information file
       file:
