@@ -168,4 +168,4 @@ Author Information
 
 - Marco Chiappero - <marco.chiappero@intel.com>
 - Radoslaw Kuschel - <radoslaw.kuschel@intel.com>
-
+- Igor D.C. - <igor.duarte.cardoso@intel.com>
