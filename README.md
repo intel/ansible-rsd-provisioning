@@ -1,3 +1,5 @@
+This feature is no longer supported by Intel
+
 ansible-rsd-provisioning
 =========
 
